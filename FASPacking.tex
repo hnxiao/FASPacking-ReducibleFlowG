@@ -77,19 +77,18 @@ We establish a min-max relation in arc-weighted reducible flow graphs in this pa
 
 A reducible flow graph is a special flow graph which corresponds to the flowchart of computer programs via structured programming. As described in \cite{Hech}, the ``divide-and-conquer'' approach applies to reducible flow graphs, which makes the analysis easier on such graphs. Reducible flow graphs also occur frequently in practice. Statistics suggest that most flow graphs associated with computer programs are reducible flow graphs. Therefore, reducible flow graphs have attracted many research efforts over the past few decades. Various characterizations of reducible flow graphs can be found in \cite{HecU1}. The first efficient algorithm for recognizing reducible flow graphs was given by Hopcroft and Ullman \cite{HopU}. Based on their work, Tarjan \cite{Tarj} derived a more efficient algorithm for testing flow graphs reducibility. 
 
-As usual, by a cycle in a digraph we mean a directed one. A digraph is called \emph{acyclic} if it contains no cycles. Let $G=(V,A)$ be a digraph with a nonnegative integral function $w$ defined on arcs in $A$. A set $F\subseteq A$ is a \emph{feedback arc set} (FAS) for $G$ if $G^\prime=(V,A\backslash F)$ is acyclic. Let $H=(A,\mathcal{C})$ be a hypergraph whose vertex set is the arc set of $G$ and edges (with repetition allowed) are the arc sets of directed cycles in $G$. A subset $\mathcal{C}^\prime$ of edge set $\mathcal{C}$ in $H$ is called a \emph{cycle packing} if each arc $a\in A$ occurs at most $w(a)$ times in cycles of $\mathcal{C}^\prime$. A \emph{transversal} of a hypergraph is a subset of its vertex set which intersects each edge of the hypergraph. Note that a transversal of $H=(A,\mathcal{C})$ is a feedback arc set of $G$. Let $\nu_w$ denote the maximum cardinality of cycle packings and $\tau_w$ denote the minimum total weight of transversals. It is easy to prove that $\nu_w\leq\tau_w$. When equality $\nu_w=\tau_w$ holds for all nonnegative integral function $w$, the hypergraph $H$ is said to satisfy the min-max relation and the graph $G$ is said to be \emph{cycle Mengerian} (CM). In \cite{Rama1}, Ramachandran gave an $O(n^2m\log(n^2 / m))$ algorithm for finding a minimum weighted feedback arc set in arc-weighted reducible graphs. She \cite{Rama2} also established a conjecture of Frank and Gyarfas \cite{FraG} by proving that the cardinality of a minimum feedback arc set is equal to the cardinality of a maximum cycle packing  in unweighted reducible flow graphs. Her proof yielded an $O(\min\{mn^{5/3},m^2\})$ algorithm for finding a maximum collection of arc disjoint cycles. Chen and Zang \cite{CheZ} pointed out that although Ramachandran's proof \cite{Rama2} was intended for unweighted reducible flow graphs, it could be adapted to handle the weighted case. Based on Ramachandran's work \cite{Rama1,Rama2}, Chen and Zang proved that every reducible flow graph is CM. They also reduced the time complexity of finding a maximum cycle packing in weighted reducible flow graphs to $O(n^2 m\log(n^2/m))$  by avoiding using augmenting path method for finding the maximum flow as a subroutine in their algorithm. 
+In this paper, by a cycle (\emph{resp.} path) in a digraph we mean a directed one. A digraph is called \emph{acyclic} if it contains no cycles, and is abbreviated a \emph{DAG} (directed acyclic graph). Let $G=(V,A)$ be a digraph with a nonnegative integral function $w$ defined on arcs in $A$. A set $F\subseteq A$ is a \emph{feedback arc set} (\emph{FAS}) for $G$ if $G^\prime=(V,A\backslash F)$ is acyclic. Let $H=(A,\mathcal{C})$ be a hypergraph whose vertex set is the arc set of $G$ and edges (with repetition allowed) are the arc sets of cycles in $G$. A subset $\mathcal{C}^\prime$ of edge set $\mathcal{C}$ in $H$ is called a \emph{cycle packing} if each arc $a\in A$ occurs at most $w(a)$ times in cycles of $\mathcal{C}^\prime$. A \emph{transversal} of a hypergraph is a subset of its vertex set which intersects each edge of the hypergraph. Note that a transversal of $H=(A,\mathcal{C})$ is a feedback arc set of $G$. Let $\nu_w$ denote the maximum cardinality of cycle packings and $\tau_w$ denote the minimum weight of feedback arc sets. It is easy to prove that $\nu_w\leq\tau_w$. When equality $\nu_w=\tau_w$ holds for all nonnegative integral function $w$, the hypergraph $H$ is said to satisfy the min-max relation and the graph $G$ is said to be \emph{cycle Mengerian} (\emph{CM}). In \cite{Rama1}, Ramachandran gave an $O(n^2m\log(n^2 / m))$ algorithm for finding a minimum weight feedback arc set in arc-weighted reducible graphs. She \cite{Rama2} also established a conjecture of Frank and Gyarfas \cite{FraG} by showing that the minimum cardinality of feedback arc sets is equal to the maximum cardinality of cycle packings  in unweighted reducible flow graphs. Her proof yielded an $O(\min\{mn^{5/3},m^2\})$ algorithm for finding a maximum collection of arc disjoint cycles. Chen and Zang \cite{CheZ} pointed out that although Ramachandran's proof \cite{Rama2} was intended for unweighted reducible flow graphs, it could be adapted to handle the weighted case. Based on Ramachandran's work \cite{Rama1,Rama2}, Chen and Zang proved that every reducible flow graph is CM. They also reduced the time complexity of finding a maximum cycle packing in weighted reducible flow graphs to $O(n^2 m\log(n^2/m))$  by avoiding using augmenting path method for finding the maximum flow as a subroutine in their algorithm. 
 
-A \emph{clutter} is a hypergraph no edge of which is contained in another. Note that hypergraph $H=(A,\mathcal{C})$ is a clutter. The hypergraph $H^\perp=(A,\mathcal{F})$ is called the \emph{blocker} of $H$, if vertex set of $H^\perp$ is the arc set of $G$ and edges (with repetition allowed) are the collection of feedback arc sets. Analogous to the definition of cycle packing, we call a subset $\mathcal{F}^\prime$ of edge set $\mathcal{F}$ in $H^\perp$ a \emph{feedback arc set packing} if each arc $a$ occurs at most $w(a)$ times in feedback arc sets of $\mathcal{F}^\prime$. Note that a transversal of $H^\perp$ is a cycle in $G$. Let $\lambda_w$ denote the maximum cardinality of feedback arc set packings and $\mu_w$ denote the minimum total weight of transversals. Obviously, $\lambda_w\leq\mu_w$. When equality $\lambda_w=\mu_w$ holds for all nonnegative integral function $w$, the hypergraph $H^\perp$ is said to satisfy the min-max relation and the graph $G$ is said to be \emph{feedback arc set Mengerian} (FASM). It has been proved that hypergraph $H=(A,\mathcal{C})$ derived from reducible flow graph $G=(V,A)$ satisfies the min-max relation. Hence every reducible flow graph is CM. A natural question is whether the blocker $H^\perp=(A,\mathcal{F})$ of hypergraph $H$ satisfies the min-max relation as well. The main purpose of this paper is to give an affirmative answer to this question, i.e., every reducible flow graph is FASM. Moreover, we present an $O(n^2 m)$ algorithm for finding a maximum FAS packing in reducible flow graphs. Our result relies heavily on the structural analysis for reducible flow graphs of Ramachandran's work \cite{Rama1,Rama2}.
+A \emph{clutter} is a hypergraph no edge of which is contained in another. Note that hypergraph $H=(A,\mathcal{C})$ is a clutter. The hypergraph $H^\perp=(A,\mathcal{F})$ is called the \emph{blocker} of $H$, where vertex set of $H^\perp$ is the arc set of $G$ and edges (with repetition allowed) are the collection of feedback arc sets. Analogous to the definition of cycle packing, we call a subset $\mathcal{F}^\prime$ of edge set $\mathcal{F}$ in $H^\perp$ a \emph{feedback arc set packing} if each arc $a$ occurs at most $w(a)$ times in feedback arc sets of $\mathcal{F}^\prime$. Note that a transversal of $H^\perp$ is a cycle in $G$. Let $\lambda_w$ denote the maximum cardinality of feedback arc set packings and $\mu_w$ denote the minimum weight of cycles. Obviously, $\lambda_w\leq\mu_w$. When equality $\lambda_w=\mu_w$ holds for all nonnegative integral function $w$, the hypergraph $H^\perp$ is said to satisfy the min-max relation and the graph $G$ is said to be \emph{feedback arc set Mengerian} (\emph{FASM}). It has been proved that hypergraph $H=(A,\mathcal{C})$ derived from reducible flow graph $G=(V,A)$ satisfies the min-max relation. Hence every reducible flow graph is CM. A natural question is whether the blocker $H^\perp=(A,\mathcal{F})$ of hypergraph $H$ satisfies the min-max relation as well. The main contribution of this paper is twofold. First, we give an affirmative answer to this question, hence every reducible flow graph is FASM. Second, we present an $O(n^2 m)$ algorithm for finding a maximum feedback arc set packing in reducible flow graphs. Our result relies heavily on the structural analysis for reducible flow graphs of Ramachandran's work \cite{Rama1,Rama2}.
 
 The remainder of this paper is organized as follows. In section 2, we introduce some preliminary knowledge on reducible flow graphs. In section 3, we first prove that every reducible flow graph is FASM, then we present our algorithm and establish its correctness.
 
 \section{Preliminaries}
 \label{prel}
 
-A \emph{flow graph} is a digraph with a root such that the root reaches all other vertices via directed paths.
-A \emph{DAG} is a directed acyclic graph. Let $G=(V,A;r)$ be a flow graph with root $r$. 
-A \emph{DAG} of $G$ is a maximal acyclic subgraph of $G$ which remains a flow graph. We call $G$ \emph{reducible} if the DAG of $G$ is unique. A DAG of $G$ obtained from a depth-first spanning tree rooted at $r$ by adding a maximal subset of arc set $A$ is called a \emph{DFS DAG} of $G$.
-
+A \emph{flow graph} is a digraph with a root such that the root reaches all other vertices via paths.
+Let $G=(V,A;r)$ be a flow graph with root $r$. 
+A \emph{DAG} of $G$ is a maximal acyclic subgraph of $G$ which remains a flow graph with root $r$. We call $G$ \emph{reducible} if the DAG of $G$ is unique. A DAG of $G$ obtained from a depth-first spanning tree rooted at $r$ by adding a maximal subset of arc set $A$ is called a \emph{DFS DAG} of $G$.
 For $u,v\in V$, we say $u$ \emph{dominates} $v$ if every $r-v$ path passes through $u$. Clearly, every vertex dominates itself. For a subgraph $G'$ of $G$, a vertex $v$ of $G'$ is called an \emph{entry vertex} if $v=r$ or there is an arc $(u,v)$ of $G$ with $u$ outside $G'$.  Observe that arcs in a reducible flow graph can be uniquely partitioned into the \emph{forward} (or \emph{DAG}) \emph{arc} set and the \emph{back arc} set.
 
 Following are some useful characterizations of reducible flow graphs.
@@ -98,7 +97,7 @@ Following are some useful characterizations of reducible flow graphs.
 Let $G=(V,A;r)$ be a flow graph and let $D$ be a DFS DAG of $G$. Then the following statements are equivalent:
 \begin{enumerate}[label=\emph{(}\alph*\emph{)}]
   \item $G$ is a reducible flow graph.
-  \item $F$ is a forbidden structure of $G$ (see Figure \ref{fig:1}).
+  \item Every obstruction of $G$ can be represented by $F$ (see Figure \ref{fig:1}).
   \item $D$ is the unique DAG of $G$.
   \item The arc set $A$ can be partitioned into $A_1$ and $A_2$ such that $(V,A_1;r)$ is a DAG of $G$ and $u$ dominates $v$ in $G$ for each arc $(v,u)$ in $A_2$.
   \item Every cycle $C$ in $G$ contains exactly one back arc $a\in A\backslash A(D)$. Moreover, the head of back arc $a\in A\backslash A(D)$ is the entry vertex of $C$ which dominates other vertices on $C$.
@@ -108,7 +107,7 @@ Let $G=(V,A;r)$ be a flow graph and let $D$ be a DFS DAG of $G$. Then the follow
 \begin{figure}
 \centering
 \includegraphics{FASPacking-fig1.eps}
-\caption{The forbidden subgraph $F$}
+\caption{The obstruction $F$}
 \label{fig:1}
 \end{figure}
 
@@ -116,7 +115,7 @@ Let $G=(V,A;r)$ be a flow graph and let $D$ be a DFS DAG of $G$. Then the follow
 The equivalence of $(a)-(d)$ can be found in \cite{HecU1} and \cite{HecU2}. The implication $(a)\Rightarrow (e)$ is proved in \cite{Sham} and the converse direction $(e)\Rightarrow (a)$ is contained in \cite{CheZ}.
 \end{proof}
 
-Throughout this paper, we use $V_h$ to denote the set of heads of all back arcs in $G$, $T_h$ to denote the \emph{head dominator tree} of $G$ which demonstrates the domination relation on $V_h\cup \{r\}$: the descendants of a vertex $u$ in $T_h$ are precisely the vertices in $V_h$ dominated by $u$ in $G$. For each $u\in V_h\cup\{r\}$, let $(u_1,v_1)$, $(u_2,v_2)$,\dots,$(u_k,v_k)$ be all the back arcs in $G$ whose heads are dominated by $u$. We use $V_u$ to denote the \emph{dominated back arc vertex set} of $u$ which consists of all the vertices in $V$ lying on some DAG path from $u$ to $u_i$, for $1\leq i\leq k$. Ramachandran \cite{Rama1,Rama2} proved that $u$ dominates all vertices in $V_u$. Let $G_s(V_u)$ be the subgraph of $G$ induced by $V_u$ (see Figure \ref{fig:2}).
+We follow some notations introduced by Hecht, Ullman \cite{HecU1, HecU2} and Ramachandran \cite{Rama1,Rama2}. Here $V_h$ denotes the set of heads of all back arcs in $G$, and $T_h$ denotes the \emph{head dominator tree} of $G$ which demonstrates the domination relation on $V_h\cup \{r\}$: the descendants of a vertex $u$ in $T_h$ are precisely the vertices in $V_h$ dominated by $u$ in $G$. For each $u\in V_h\cup\{r\}$, let $(u_1,v_1)$, $(u_2,v_2)$,\dots,$(u_k,v_k)$ be all the back arcs in $G$ whose heads are dominated by $u$. We use $V_u$ to denote the \emph{dominated back arc vertex set} of $u$ which consists of all the vertices in $V$ lying on some DAG path from $u$ to $u_i$, for $1\leq i\leq k$. Ramachandran \cite{Rama1,Rama2} proved that $u$ dominates all vertices in $V_u$. We use $G_s(V_u)$ to denote the subgraph of $G$ induced by $V_u$ (see Figure \ref{fig:2}).
 
 \begin{figure}
     \centering
@@ -200,7 +199,7 @@ Let $G=(V,A;r)$ be a reducible flow graph with a nonnegative integral weight $w(
           \includegraphics[scale=.425]{FASPacking-fig3b.eps}
           \label{fig:3b}
     \end{minipage}} 
-    \caption{Network $N(v_1,t)$ and $N(v_4,t)$ obtained from reducible flow graph $G$}
+    \caption{$N(v_i,t)$ constructed from $G_s(V_{v_i})$}
      \label{fig:3}
  \end{figure}
 
@@ -221,7 +220,7 @@ Suppose $N(u,t)\backslash\{t\}$ and $N(v,t)\backslash\{t\}$ have a vertex in com
 By Theorem \ref{thm:2}, $G_s(V_u)$ is a reducible flow graph rooted at $u$. And in the construction of $N(u,t)$ from $G_s(V_u)$, we break all cycles in $G_s(V_u)$. So $(c)$ follows.
 \end{proof}
 
-In the following, we focus on network $N(r,t)$ and denote it by $N$ for short. We extend the weight function $w$ on arcs in $G=(V,A;r)$ to a length function $l$ on arcs in $N$: first, set $l(a)=w(a^\prime)$ for each arc $a\in A(N)$ that corresponds to arc $a^\prime\in A$; then, for each newly added arc $a=(v^\prime,t)$ in $A(N)$, set $l(a)=d-d(v)$, where $d(v)$ is the distance from $r$ to $v$ in $N$ and $d:=\max_{v\in V_h} d(v)$ stands for the largest distance from $r$ to every vertex in $V_h$. Obviously, $l(a)\geq 0$ for all $a\in A(N)$. We denote the arc weighted network by $N(r,t;l)$. In network $N(r,t;l)$, the set of all vertices at distance less than $i$ from $r$ is denoted by $U_i$ and the set of all outgoing arcs of set $U_i$ is denoted by $\partial^+(U_i)$.
+In the following, we focus on network $N(r,t)$ and denote it by $N$ for short. We extend the weight function $w$ on arcs in $G=(V,A;r)$ to a length function $l$ on arcs in $N$: first, set $l(a)=w(a^\prime)$ for each arc $a\in A(N)$ that corresponds to arc $a^\prime\in A$; then, for each newly added arc $a=(v^\prime,t)$ in $A(N)$, set $l(a)=d-d(v)$, where $d(v)$ is the distance from $r$ to $v$ in $N$ and $d:=\max_{v\in V_h} d(v)$ stands for the largest distance from $r$ to every vertex in $V_h$. Obviously, $l(a)\geq 0$ for all $a\in A(N)$. We denote the arc-weighted network by $N(r,t;l)$. In network $N(r,t;l)$, the set of all vertices at distance less than $i$ from $r$ is denoted by $U_i$ and the set of all outgoing arcs of set $U_i$ is denoted by $\partial^+(U_i)$.
 
 \begin{lemma}
 \label{lem:2}
@@ -311,7 +310,7 @@ Now we are ready to present our algorithm.
   \SetKwFunction{Augment}{Augment}
   \SetKwFunction{Update}{Update}
   \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
-  \Input{An arc weighted reducible flow graph $G=(V,A;r)$}
+  \Input{An arc-weighted reducible flow graph $G=(V,A;r)$}
   \Output{A maximum FAS packing $\mathcal{F}$ of $G$}
   \BlankLine
   Construct $N(r,t;l)$ from $G=(V,A;r)$\;
@@ -323,7 +322,8 @@ Now we are ready to present our algorithm.
     $F\leftarrow \emptyset$\;
     $\alpha\leftarrow d(t)$\;
     \Augment($\partial^+(U_{d+1})$)\;
-    Delete all newly added arcs from $F$ and replace each remaining arc in $F$ by its corresponding arc in $G$\;
+    Delete all newly added arcs from $F$\;
+    Replace remaining arcs in $F$ by corresponding arcs in $G$\;
     $\mathcal{F}\leftarrow \mathcal{F}\cup \{(F,\alpha)\}$\;
     \Update($l$)\;
     Find $d(v)$ for every $v\in V(N)$ with respect to current $l$ in $N$\;
@@ -363,7 +363,7 @@ Let $l:A\rightarrow \mathbb{R}$ be the length function defined on arcs of $D$ an
 
 \begin{theorem}
 \label{thm:5}
-In an arc weighted reducible flow graph $G=(V,A;r)$, a maximum FAS packing $\mathcal{F}$ can be found in $O(n^2 m)$ time, where $n=\lvert V \rvert$ and $m=\lvert A \rvert$.
+In an arc-weighted reducible flow graph $G=(V,A;r)$, a maximum FAS packing $\mathcal{F}$ can be found in $O(n^2 m)$ time, where $n=\lvert V \rvert$ and $m=\lvert A \rvert$.
 \end{theorem}
 \begin{proof}
 By the construction of network $N(r,t;l)$, $\lvert V(N)\rvert\leq 2n+1$ and $\lvert A(N)\rvert\leq m+n$. It follows that $O(\lvert V(N)\rvert)=O(n)$. Since $G$ is connected, $O(\lvert A(N)\rvert)=O(m)$. Notice that the construction of network $N$ involves finding the shortest distance $d(v)$ for $v\in V_h$. By Lemma \ref{lem:6}, we can find all the distance $d(v)$ from $r$ in $O(m+n)=O(m)$ time. So the construction of network $N$ requires $O(m)$ time. It is easy to see that all operations outside STAGEs take $O(m)$ time. By Lemma \ref{lem:5}, our algorithm ends in $O(n)$ STAGEs. It remains to show that the time complexity of each STAGE is $O(nm)$. Notice that each STAGE contains a recursive function $Augment(S)$ and a function $Update(l)$. Each invocation of function $Augment(S)$ in a STAGE decreases the number of newly added arcs in $S$ by at least one. So $Augment(S)$ in a STAGE ends in $O(n)$ invocations. Function $Augment(S)$ itself involves finding $\min_{(u,w)\in S}\{d(w)-d\}$ and $\max_{(v^\prime,t)\in S} d(v)$, both of which can be done in $O(n)$ time. So the complexity of function $Augment(S)$ in one STAGE is $O(n^2)$. As to function $Update(l)$, it requires $O(nm)$ time in one STAGE. Hence the time complexity of each STAGE is $O(nm)$. The theorem follows.
