@@ -97,7 +97,7 @@ Following are some useful characterizations of reducible flow graphs.
 Let $G=(V,A;r)$ be a flow graph and let $D$ be a DFS DAG of $G$. Then the following statements are equivalent:
 \begin{enumerate}[label=\emph{(}\alph*\emph{)}]
   \item $G$ is a reducible flow graph.
-  \item Every obstruction of $G$ can be represented by $F$ (see Figure \ref{fig:1}).
+  \item $F$ is the unique obstruction for the transitive closure of $G$ (see Figure \ref{fig:1}).
   \item $D$ is the unique DAG of $G$.
   \item The arc set $A$ can be partitioned into $A_1$ and $A_2$ such that $(V,A_1;r)$ is a DAG of $G$ and $u$ dominates $v$ in $G$ for each arc $(v,u)$ in $A_2$.
   \item Every cycle $C$ in $G$ contains exactly one back arc $a\in A\backslash A(D)$. Moreover, the head of back arc $a\in A\backslash A(D)$ is the entry vertex of $C$ which dominates other vertices on $C$.
@@ -106,7 +106,7 @@ Let $G=(V,A;r)$ be a flow graph and let $D$ be a DFS DAG of $G$. Then the follow
 
 \begin{figure}
 \centering
-\includegraphics{FASPacking-fig1.eps}
+\includegraphics[scale=.6]{FASPacking-fig1.eps}
 \caption{The obstruction $F$}
 \label{fig:1}
 \end{figure}
@@ -122,19 +122,19 @@ We follow some notations introduced by Hecht, Ullman \cite{HecU1, HecU2} and Ram
     \subfloat[$G$]{
     \begin{minipage}[t]{0.33\linewidth}
           \centering
-          \includegraphics[scale=.45]{FASPacking-fig2a.eps}
+          \includegraphics[scale=.38]{FASPacking-fig2a.eps}
           \label{fig:2a}
     \end{minipage}}
     \subfloat[$T_h$]{
      \begin{minipage}[t]{0.33\linewidth} 
           \centering
-          \includegraphics[scale=.45]{FASPacking-fig2b.eps}
+          \includegraphics[scale=.38]{FASPacking-fig2b.eps}
           \label{fig:2b}
     \end{minipage}}
     \subfloat[$G_s(V_{v_4})$]{
     \begin{minipage}[t]{0.33\linewidth} 
           \centering
-          \includegraphics[scale=.45]{FASPacking-fig2c.eps}
+          \includegraphics[scale=.38]{FASPacking-fig2c.eps}
           \label{fig:2c}
     \end{minipage}}  
     \caption{Reducible flow graph $G$ and corresponding $T_h$, $G_s(V_{v_4})$}
@@ -153,100 +153,54 @@ Let $G=(V,A;r)$ be a reducible flow graph and let $u$, $v$ be two vertices in $V
 \end{enumerate}
 \end{theorem}
 
-Let $G=(V,A)$ be a digraph with a nonnegative length $l(a)$ on each arc $a\in A$. For each path $P=(v_0,a_1,v_1,\dots,a_m,v_m)$, the \emph{length} $l(P)$ is defined by:
-\begin{equation*}
-l(P):=\sum_{i=1}^m l(a_i).
-\end{equation*}
-
-Let $s,t$ be two vertices in $V$. The \emph{distance} from $s$ to $t$ (with respect to $l$), denoted by $d(s,t)$, is equal to the minimum length of all $s-t$ paths. If no $s-t$ path exists, $d(s,t)$ is set to $+\infty$.
-
-The following theorem is due to Robacker \cite{Roba}. Since the proof technique plays an important role in this paper, for completeness we include Robacker's proof here.
-\begin{theorem}
-\label{thm:3}
-Let $G=(V,A)$ be a digraph, $s,t\in V$ and let $l:A\rightarrow \mathbb{Z}_+$. Then the minimum length of an $s-t$ path is equal to the maximum size $k$ of a family of $s-t$ cuts $C_1,C_2,\dots,C_k$ (with repetition allowed) such that each arc $a$ is in at most $l(a)$ of the cuts $C_i$.
-\end{theorem}
-\begin{proof}
-Note that if $P$ is any $s-t$ path and $C_1,C_2,\dots,C_k$ is any collection as described in the theorem, then
-\begin{equation*}
-\begin{split}
-&~ l(P)=\sum_{a\in A(P)}l(a)\geq \sum_{a\in A(P)}(\mbox{number of $i$ with $a\in C_i$})\\
-&=\sum_{i=1}^k\lvert C_i\cap A(P)\rvert \geq \sum_{i=1}^k 1=k.
-\end{split}
-\end{equation*}
-So the minimum is bounded from below by maximum. To establish equality, let $d$ be the distance from $s$ to $t$, and let $U_i$ be the set of vertices at distance less than $i$ from $s$, for $i=1,\dots,d$. Taking $C_i:=\partial^+(U_i)$, we obtain a collection $C_1,C_2,\dots,C_d$ as required.
-\end{proof}
-
-
 \section{Maximum feedback arc set packings in reducible flow graphs}
 \label{sec:3}
 
 \subsection{Min-max relation}
 \label{sec:4}
 
-Let $G=(V,A;r)$ be a reducible flow graph with a nonnegative integral weight $w(a)$ on each arc $a\in A$. For each $u\in V_h\cup\{r\}$, we construct a network $N(u,t)$ from $G_s(V_u)$ as follows. Split every head $v$ in $G_s(V_u)\cap V_h$ into two vertices $v$ and $v^\prime$ and add a new vertex $t$. For all arcs incident to the original head $v$ (both entering and leaving $v$), connect all DAG arcs to the vertex $v$ in $N$ in the same manner as the original arcs in $G_s(V_u)$ (entering arcs remain entering arcs, and leaving arcs remain leaving arcs) and connect all back arcs to the vertex $v^\prime$ in $N$ also in the same manner as the original arcs in $G_s(V_u)$. Besides, connect every $v^\prime$ to $t$ by a \emph{newly added arc} $(v^\prime,t)$. 
+Let $G=(V,A;r)$ be a reducible flow graph with a nonnegative integral weight $w(a)$ on each arc $a\in A$. We construct a network $N(r,t)$ from $G$ as follows. Add a new vertex $t$. For $v\in V_h$, make a copy $v'$, redirect back arcs from $v$ to $v'$ and connect $v'$ to $t$ by a \emph{newly added arc} $(v^\prime,t)$. 
+
+We extend the weight function $w$ on arcs in $G=(V,A;r)$ to a length function $l$ on arcs in $N$: first, set $l(a)=w(a^\prime)$ for each arc $a\in A(N)$ that corresponds to arc $a^\prime\in A$; then, for each newly added arc $a=(v^\prime,t)$ in $A(N)$, set $l(a)=d-d(v)$, where $d(v)$ is the distance from $r$ to $v$ in $N$ and $d:=\max_{v\in V_h} d(v)$ stands for the largest distance from $r$ to every vertex in $V_h$. Obviously, $l(a)\geq 0$ for all $a\in A(N)$. In network $N(r,t)$, the set of all vertices at distance less than $i$ from $r$ is denoted by $U_i$ and the set of all outgoing arcs of set $U_i$ is denoted by $\partial^+(U_i)$.
 
 \begin{figure}
     \centering
-    \subfloat[$N(v_1,t)$]{
-    \begin{minipage}[t]{0.5\linewidth}
-          \centering
-          \includegraphics[scale=.425]{FASPacking-fig3a.eps}
-          \label{fig:3a}
-    \end{minipage}}
-    \subfloat[$N(v_4,t)$]{
-     \begin{minipage}[t]{0.5\linewidth} 
-          \centering
-          \includegraphics[scale=.425]{FASPacking-fig3b.eps}
-          \label{fig:3b}
-    \end{minipage}} 
-    \caption{$N(v_i,t)$ constructed from $G_s(V_{v_i})$}
+    \includegraphics[scale=.8]{FASPacking-fig32.eps}
+    \caption{$N(v_1,t)$ constructed from $G=(V,A;v_1)$}
      \label{fig:3}
  \end{figure}
 
 \begin{lemma}
-\label{lem:1}
-Let $u,v\in V_h\cup\{r\}$. Then
-\begin{enumerate}[label=\emph{(}\alph*\emph{)}]
-  \item $u^\prime$ is not contained in $N(v,t)$ while $v^\prime$ is contained in $N(u,t)$ iff $u$ dominates $v$.
-  \item Either $N(u,t)\backslash\{t\}$ and $N(v,t)\backslash\{t\}$ are vertex disjoint or one of $N(u,t)$ and $N(v,t)$ is contained in the other.
-  \item $N(u,t)$ is an acyclic digraph rooted at $u$.
-\end{enumerate}
-\end{lemma}
-\begin{proof}
-Note that $u^\prime$ is not contained in $N(v,t)$ and $v^\prime$ is contained in $N(u,t)$ iff $u\not\in V_v$ and $v\in V_u$ iff $u$ dominates $v$. So $(a)$ follows.
-
-Suppose $N(u,t)\backslash\{t\}$ and $N(v,t)\backslash\{t\}$ have a vertex in common. From their construction, we deduce that $G_s(V_u)$ and $G_s(V_v)$ have the same common vertex. By Theorem \ref{thm:2}, $u$ dominates $v$ or $v$ dominates $u$. Without loss of generality, we may assume that $u$ dominates $v$. Then $V_v\subseteq V_u$. Again from the construction, $N(v,t)$ must be contained in $N(u,t)$.
-
-By Theorem \ref{thm:2}, $G_s(V_u)$ is a reducible flow graph rooted at $u$. And in the construction of $N(u,t)$ from $G_s(V_u)$, we break all cycles in $G_s(V_u)$. So $(c)$ follows.
-\end{proof}
-
-In the following, we focus on network $N(r,t)$ and denote it by $N$ for short. We extend the weight function $w$ on arcs in $G=(V,A;r)$ to a length function $l$ on arcs in $N$: first, set $l(a)=w(a^\prime)$ for each arc $a\in A(N)$ that corresponds to arc $a^\prime\in A$; then, for each newly added arc $a=(v^\prime,t)$ in $A(N)$, set $l(a)=d-d(v)$, where $d(v)$ is the distance from $r$ to $v$ in $N$ and $d:=\max_{v\in V_h} d(v)$ stands for the largest distance from $r$ to every vertex in $V_h$. Obviously, $l(a)\geq 0$ for all $a\in A(N)$. We denote the arc-weighted network by $N(r,t;l)$. In network $N(r,t;l)$, the set of all vertices at distance less than $i$ from $r$ is denoted by $U_i$ and the set of all outgoing arcs of set $U_i$ is denoted by $\partial^+(U_i)$.
-
-\begin{lemma}
 \label{lem:2}
-For each $v\in V_h$, the following statements hold:
+For $v\in V_h$, the following statements hold:
 \begin{enumerate}[label=\emph{(}\alph*\emph{)}]
-  \item There is a one to one correspondence between cycles whose head of back arc is $v$ in $G$ and $v-t$ paths passing through $v^\prime$ in $N$. 
-  \item Among all $r-t$ paths in $N$ passing through $v^\prime$, the shortest length is $d+d(v,v^\prime)$.
+  \item Every $r-v'$ path goes through $v$.
+  \item There is a one to one correspondence between cycles whose head of the back arc is $v$ in $G$ and $v-t$ paths going through $v^\prime$ in $N(r,t)$. 
+  \item The length of the shortest $r-t$ paths through $v^\prime$ is $d+d(v,v^\prime)$.
 \end{enumerate}
 \end{lemma}
 \begin{proof}
-From the construction of $N$, $(a)$ follows directly.
+By Theorem \ref{thm:2}, $v$ is the unique entry vertex of $G_s(V_v)$. Then by the construction of $N(r,t)$, $(a)$ and $(b)$ follows directly.
 
-By Theorem \ref{thm:2}, $v$ is the only entry vertex of $G_s(V_v)$. From the construction, we see that $v$ is the only entry vertex of $N(v,t)\backslash\{t\}$. Since any part of the shortest path is also a shortest path, so the length of the shortest $r-t$ paths passing through $v^\prime$ is $d(v)+d(v,v^\prime)+d(v^\prime,t)=d(v)+d(v,v^\prime)+d-d(v)=d+d(v,v^\prime)$.
+Since any part of a shortest path is also a shortest path, so the length of the shortest $r-t$ paths going through $v^\prime$ is $d(v)+d(v,v^\prime)+d(v^\prime,t)=d(v)+d(v,v^\prime)+d-d(v)=d+d(v,v^\prime)$.
 \end{proof}
 
-Let $K$ denote the minimum total weight of cycles in $G$ throughout this paper. By Lemma \ref{lem:2}, $d(t)=\min_{v\in V_h}\{d+d(v,v^\prime)\}=d+K$, implying that the total number of $r-t$ cuts $\partial^+(U_i)$ in $N$ is $d+K$.
+Let $K$ denote the minimum total weight of cycles in $G$. By Lemma \ref{lem:2}, $d(t)=\min_{v\in V_h}\{d+d(v,v^\prime)\}=d+K$, implying that the total number of $r-t$ cuts $\partial^+(U_i)$ in $N$ is $d+K$.
 
-Inspired by the proof of Theorem \ref{thm:3}, if deleting $r-t$ cut $\partial^+(U_i)$ breaks all $v-v^\prime$ paths in $N(r,t;l)$ for every $v\in V_h$, then $\partial^+(U_i)$ naturally yields an FAS in $G=(V,A;r)$, and all such sets form an FAS packing of $G$. Unfortunately, we cannot even guarantee the existence of such $\partial^+(U_i)$ in $N(r,t;l)$, not to mention maximizing the collection of such sets. However, the hierarchy structure of network $N(r,t;l)$ inherited from reducible flow graphs enables us to tackle this question in an augmenting way: when necessary, we use more than one $r-t$ cuts $\partial^+(U_i)$ from $N$ to form an FAS of $G$ and manage to maximize the number of FAS we can get.
+For $v\in V_h$, let $C_v$ denote the collection of all cycles in $G$ whose head of the back arc is $v$. With a slight abuse of notation, we call $\partial^+(U_i)$ is a \emph{FAS} of $C_v$ if it cuts off all $v-v'$ paths in $N$, since it yields a FAS of $C_v$ naturally. We call $\partial^+(U_i)$ a \emph{quasi-FAS} of $C_v$ if deleting $\partial^+(U_i)$ breaks all $v-t$ paths in $N$. Let $\mathcal{C}$ be the collection of $C_v$ for $v\in S\subseteq V_h$. We call $\partial^+(U_i)$ a \emph{quasi-FAS} of $\mathcal{C}$ if $\partial^+(U_i)$ is a quasi-FAS of $C_v$ for $C_v\in\mathcal{C}$, and we call a quasi-FAS $\partial^+(U_i)$ of $\mathcal{C}$ a \emph{quasi-FAS} of $G$ if $\mathcal{C}$ is the collection of $C_v$ for $v\in V_h$. By Lemma \ref{lem:2}, it is easy to see that $\partial^+(U_i)$ is a \emph{FAS} of $C_v$ if $d(v)<i\leq \min\{d(t),d(v^\prime)\}$, a quasi-FAS of $C_v$ if $d(v) <i\leq d(t)$, a quasi-FAS of $\mathcal{C}$ if $\max_{v:C_v\in \mathcal{C}}d(v)<i\leq d(t)$ and a quasi-FAS of $G$ if $d<i\leq d(t)$. Furthermore, for $v\in V_h$, the number of quasi-FASs of $C_v$ is $d(t)-d(v)$ and the number of FASs of $C_v$ is $\min\{d(t),d(v^\prime)\}-d(v)$; the number of quasi-FASs of $\mathcal{C}$ is $d(t)-\max_{v:C_v\in \mathcal{C}}d(v)$. In particular, the number of quasi-FASs of $G$ is $d(t)-d=K$.
 
-By Theorem \ref{thm:1}, each cycle in reducible flow graph $G$ contains a unique back arc. We may decompose all the cycles in $G$ into disjoint subsets according to their back arcs. However, different back arcs may share the same head and cycles whose back arcs sharing the same head do not make any differences for us in this paper, so we give the decomposition by heads of back arcs. Let $C_v$ be the collection of all cycles in $G$ whose head of back arc is $v\in V_h$. We call $\partial^+(U_i)$ in $N$ a \emph{quasi} cut of $C_v$ if deleting $\partial^+(U_i)$ breaks all $v-t$ paths in $N$, a \emph{proper} cut of $C_v$ if deleting $\partial^+(U_i)$ breaks all $v-v^\prime$ paths in $N$. Let $\mathcal{C}$ be the collection of $C_v$ in $G$ for some $v\in V_h$. We call $\partial^+(U_i)$ in $N$ a \emph{quasi} cut of $\mathcal{C}$ if $\partial^+(U_i)$ is a quasi cut for every $C_v\in\mathcal{C}$. Besides, we call a quasi cut $\partial^+(U_i)$ of $\mathcal{C}$ a \emph{quasi} FAS of $G$ if $\mathcal{C}$ is the collection of $C_v$ for every $v\in V_h$. By Lemma \ref{lem:2}, it is easy to see that $\partial^+(U_i)$ is a quasi cut of $C_v$ if $d(v) <i\leq d(t)$, a proper cut of $C_v$ if $d(v)<i\leq \min\{d(t),d(v^\prime)\}$, a quasi cut of $\mathcal{C}$ if $\max_{v:C_v\in \mathcal{C}}d(v)<i\leq d(t)$ and a quasi FAS of $G$ if $d<i\leq d(t)$. Furthermore, for $v\in V_h$, the number of quasi cuts of $C_v$ is $d(t)-d(v)$ and the number of proper cuts of $C_v$ is $\min\{d(t),d(v^\prime)\}-d(v)$; for a collection $\mathcal{C}$ of $C_v$, the number of quasi cuts of $\mathcal{C}$ is $d(t)-\max_{v:C_v\in \mathcal{C}}d(v)$; the number of quasi FASs of $G$ is $d(t)-d=K$.
+ As we shall see, starting with $\mathcal{C}=\{C_v: v\in V_h\}$, we always arrive at an FAS of $G$ by recursively choosing some quasi-FAS $\partial^+(U_i)$ of current $\mathcal{C}$ and deleting $C_v$ that are broken by $\partial^+(U_i)$ from $\mathcal{C}$.
 
-We are interested in distinguishing these $r-t$ cuts $\partial^+(U_i)$ because starting with a quasi FAS $\partial^+(U_i)$ of $G$, we can construct a valid FAS by attaching some quasi cuts of a series of nested subsets of $\mathcal{C}$, where $\mathcal{C}$ is the collection of all $C_v$ such that $(v^\prime,t)\in \partial^+(U_i)$. Furthermore, it turns out that we can achieve the maximum number of valid FASs in such a manner.
+Whenever there are quasi cut for $\mathcal{C}$ we always arrive at a FAS.
 
-Now let us see how to construct a valid FAS of $G$ from a quasi FAS $\partial^+(U_i)$ so that we can maximize the number of valid FASs. If a quasi FAS $\partial^+(U_i)$ contains no newly added arc $(v^\prime,t)$, then replace each arc in $\partial^+(U_i)$ by its corresponding arc in $G$, which directly yields a valid FAS of $G$. So assume there are newly added arcs $(v^\prime,t)$ in quasi FAS $\partial^+(U_i)$ and let $\mathcal{C}$ be the collection of all $C_v$ associated with those newly added arcs. Note that it is the newly added arcs in quasi FAS $\partial^+(U_i)$ or equivalently the collection $\mathcal{C}$ that prevents $\partial^+(U_i)$ from being a valid FAS. To construct a valid FAS, we need to cut off all $v-v^\prime$ paths for each $C_v\in\mathcal{C}$. A straightforward idea is to attach a proper cut of $C_v$ to the initial quasi FAS $\partial^+(U_i)$ for each $C_v\in \mathcal{C}$. As we shall see, the first available\footnote{`First available' here refers to the $r-t$ cut $\partial^+(U_i)$ with the least index $i$ among all unused cuts.} quasi cut of $\mathcal{C}$ is always an available proper cut of some $C_v\in\mathcal{C}$ throughout our construction process, which serves the purpose very well. In the following, we say $r-t$ cut $\partial^+(U_i)$ in $N$ \emph{breaks} $C_v$ if $\partial^+(U_i)$ is a proper cut of $C_v$. When $\mathcal{C}$ is not empty, we recursively choose the first available quasi cut of current $\mathcal{C}$ as a supplement of the initial quasi FAS $\partial^+(U_i)$ and delete every $C_v$ from $\mathcal{C}$ that is broken by this quasi cut. We call an execution of choosing the first available quasi cut of current $\mathcal{C}$ and deleting the broken cycle classes from $\mathcal{C}$ an \emph{iteration}. As long as we have available quasi cuts breaking some $C_v\in\mathcal{C}$ in each iteration before $\mathcal{C}$ becomes empty, the cardinality of $\mathcal{C}$ decreases by at least one in each iteration and we will finally arrive at a valid FAS of $G$: when $\mathcal{C}$ is empty, take the union of the initial quasi FAS and all the chosen quasi cuts, delete all newly added arcs from its union and replace each arc by its corresponding arc in $G$. For simplicity, we call the process of constructing a valid FAS a \emph{stage}.
+When $\mathcal{C}$ is not empty, we recursively choose a quasi-cut of current $\mathcal{C}$
+
+Without loss of generality, assume there are newly added arcs in the initial quasi-FAS $\partial^+(U_i)$ and. As we shall see, the first available\footnote{`First available' here refers to the $r-t$ cut $\partial^+(U_i)$ with the least index $i$ among all unused cuts.} quasi-cut of $\mathcal{C}$ is always available cut of some $C_v\in\mathcal{C}$ throughout our construction process. When $\mathcal{C}$ is not empty, we recursively choose the first available quasi-cut of current $\mathcal{C}$ as a supplement of the initial quasi-FAS $\partial^+(U_i)$ and delete every $C_v$ from $\mathcal{C}$ that is broken by this quasi-cut. We call an execution of choosing the first available quasi-cut of current $\mathcal{C}$ and deleting the broken cycle classes from $\mathcal{C}$ an \emph{iteration}. As long as we have available quasi cuts breaking some $C_v\in\mathcal{C}$ in each iteration before $\mathcal{C}$ becomes empty, the cardinality of $\mathcal{C}$ decreases by at least one in each iteration and we will finally arrive at a FAS of $G$. When $\mathcal{C}$ is empty, take the union of the initial quasi-FAS and all the chosen quasi-cuts, delete all newly added arcs from its union and replace each arc by its corresponding arc in $G$. We call the process of constructing a valid FAS a \emph{stage}.
 
 Observe that the initial quasi FAS of each stage is actually the first available quasi cut of $\mathcal{C}$, where $\mathcal{C}$ is the collection of $C_v$ for every $v\in V_h$. Therefore our construction process in each stage has a slightly different interpretation. Instead of starting with a quasi FAS, we start with an empty set $F$ and initialize $\mathcal{C}$ by the collection of $C_v$ for every $v\in V_h$. When $\mathcal{C}$ is not empty, we recursively choose the first available quasi cut $\partial^+(U_i)$ of current $\mathcal{C}$, merge $\partial^+(U_i)$ into $F$, and update $\mathcal{C}$ by deleting every $C_v$ that is broken by $\partial^+(U_i)$. When $\mathcal{C}$ becomes empty, the resulting $F$ breaks all $C_v$ for every $v\in V_h$. Deleting all newly added arcs in $F$ and replacing each arc in $F$ by its corresponding arc in $G$ give rise to a valid FAS of $G$.
+
+Let $\mathcal{C}$ be the collection of $C_v$ for $v\in V_h$. To construct a FAS, we start with an empty set $F$. When $\mathcal{C}$ is not empty, we recursively choose a quasi-cut $\partial^+(U_i)$ of current $\mathcal{C}$, merge $\partial^+(U_i)$ into $F$, and update $\mathcal{C}$ by deleting every $C_v$ that is broken by $\partial^+(U_i)$. We call an execution of choosing the first available quasi-cut of current $\mathcal{C}$ and deleting the broken cycle classes from $\mathcal{C}$ an \emph{iteration}. When $\mathcal{C}$ becomes empty, the resulting $F$ breaks all $C_v$ for every $v\in V_h$. Deleting all newly added arcs in $F$ and replacing each arc in $F$ by its corresponding arc in $G$ give rise to a FAS of $G$.
+
 
 Now the problem boils down to showing that in the construction of each stage, the first available quasi cut of current $\mathcal{C}$ always breaks some $C_v\in\mathcal{C}$ before $\mathcal{C}$ becomes empty. Notice that in the worst case, we need a proper cut for every $C_v\in\mathcal{C}$. Therefore if we can show that we always have enough available proper cuts for every $C_v\in \mathcal{C}$ throughout the construction process, we are done. The following lemma guarantees that we always have enough available proper cuts of $C_v$ for every $v\in V_h$ and hence iterations always end in each stage.
 
@@ -370,10 +324,10 @@ By the construction of network $N(r,t;l)$, $\lvert V(N)\rvert\leq 2n+1$ and $\lv
 \end{proof}
 
 \section*{Acknowledgments}
-The author would like to thank Prof. Wenan Zang for his insightful suggestions and anonymous referees for their invaluable comments.
+The author would like to thank Prof. Wenan Zang for his invaluable suggestions.
 
 \bibliographystyle{spmpsci}
 \bibliography{FASPacking}
-\nocite{CDHZ,DinZ,HecU2,Sham,Schr2}
+\nocite{CDHZ,DinZ,HecU2,Sham}
 
 \end{document}
